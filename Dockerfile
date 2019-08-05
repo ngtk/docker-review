@@ -75,3 +75,13 @@ ENV RUBYZIP_VERSION 1.2.1
 RUN gem install md2review -v "$MD2REVIEW_VERSION" --no-rdoc --no-ri && \
     gem install redcarpet -v "$REDCARPET_VERSION" --no-rdoc --no-ri && \
     gem install rubyzip -v "$RUBYZIP_VERSION" --no-rdoc --no-ri
+
+# Install inconsolata
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    fonts-inconsolata xzdec wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN tlmgr init-usertree && \
+    tlmgr update --self --all && \
+    tlmgr install inconsolata
