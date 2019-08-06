@@ -64,15 +64,17 @@ RUN texhash && kanji-config-updmap-sys noto
 # Add special packages by cattaka
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    make ruby2.3-dev gcc libstdc++-6-dev && \
+    make rbenv ruby-build libssl1.0-dev gcc libstdc++-6-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 ENV MD2REVIEW_VERSION 1.12.0
 ENV REDCARPET_VERSION 3.4.0
 ENV RUBYZIP_VERSION 1.2.1
-RUN gem install md2review -v "$MD2REVIEW_VERSION" --no-rdoc --no-ri && \
-    gem install redcarpet -v "$REDCARPET_VERSION" --no-rdoc --no-ri && \
-    gem install rubyzip -v "$RUBYZIP_VERSION" --no-rdoc --no-ri
+RUN rbenv install 2.3.0 && \
+    rbenv global 2.3.0
+RUN rbenv exec gem install md2review -v "$MD2REVIEW_VERSION" --no-rdoc --no-ri && \
+    rbenv exec gem install redcarpet -v "$REDCARPET_VERSION" --no-rdoc --no-ri && \
+    rbenv exec gem install rubyzip -v "$RUBYZIP_VERSION" --no-rdoc --no-ri
 
 # Install inconsolata
 RUN apt-get update && \
